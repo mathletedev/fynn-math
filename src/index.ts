@@ -1,7 +1,10 @@
+import { Intents } from "discord.js";
 import "dotenv-safe/config";
-import { Master } from "eris-sharder";
+import { Bot } from "./bot";
 
-const _ = new Master(process.env.BOT_TOKEN!, "/dist/main.js", {
-	clientOptions: {},
-	name: "Fynn"
-});
+const fynn = new Bot(
+	{ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] },
+	process.env.CALC_CHANNEL!
+);
+
+fynn.login(process.env.BOT_TOKEN);
