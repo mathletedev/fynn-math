@@ -2,9 +2,15 @@ import { Intents } from "discord.js";
 import "dotenv-safe/config";
 import { Bot } from "./bot";
 
-const fynn = new Bot(
-	{ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] },
-	process.env.CALC_CHANNEL!
-);
+(async () => {
+	const fynn = new Bot(
+		{ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] },
+		{ token: process.env.BOT_TOKEN!, calcChannel: process.env.CALC_CHANNEL! }
+	);
 
-fynn.login(process.env.BOT_TOKEN);
+	// await fynn.unregisterCommands(process.env.BOT_ID!, process.env.CALC_GUILD!);
+	await fynn.loadCommands("commands");
+	await fynn.registerCommands(process.env.BOT_ID!, process.env.CALC_GUILD!);
+
+	fynn.start();
+})();

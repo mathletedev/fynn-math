@@ -1,33 +1,33 @@
 import { stripIndents } from "common-tags";
-import { Message } from "discord.js";
+import { Message, MessageEmbedFooter, MessageEmbedOptions } from "discord.js";
 
 export class Util {
-	public replyResult(message: Message, expr: string, res: string) {
-		message.reply({
-			embeds: [
-				{
-					description: stripIndents`
+	public formatResult(
+		footer: MessageEmbedFooter,
+		expr: string,
+		res: string
+	): MessageEmbedOptions {
+		return {
+			description: stripIndents`
 				**Expression:**
 				\`\`\`${expr}\`\`\`
 				**Result:**
 				\`\`\`${res}\`\`\`
 			`,
-					color: "BLURPLE",
-					footer: {
-						iconURL: message.author.displayAvatarURL(),
-						text: message.member?.nickname ?? message.author.username
-					},
-					timestamp: Date.now()
-				}
-			],
-			allowedMentions: { repliedUser: false }
-		});
+			color: "BLURPLE",
+			footer,
+			timestamp: Date.now()
+		};
 	}
 
-	public replyResultError(message: Message, error: string) {
-		message.reply({
-			content: `❌ Error: \`${error}\``,
-			allowedMentions: { repliedUser: false }
-		});
+	public formatResultError(error: string) {
+		return `❌ Error:\`${error}\``;
+	}
+
+	public getFooter(message: Message): MessageEmbedFooter {
+		return {
+			iconURL: message.author.displayAvatarURL(),
+			text: message.member?.nickname ?? message.author.username
+		};
 	}
 }
