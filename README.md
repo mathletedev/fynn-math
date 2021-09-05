@@ -1,2 +1,3 @@
 # fynn-math
-Fynn math helper for my private Discord server
+
+> Fynn math helper for my private Discord server
